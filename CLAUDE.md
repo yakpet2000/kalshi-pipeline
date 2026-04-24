@@ -36,9 +36,13 @@ We are currently at the start of **session 1**.
 - Kalshi public REST API, no authentication required.
 - Base URL: `https://api.elections.kalshi.com/trade-api/v2`
 - Primary endpoints: `GET /markets`, `GET /markets/{ticker}`
-- **Use the `_fp` (fixed-point) and `_dollars` fields.** The legacy integer
-  fields (e.g. `yes_bid`, `yes_ask` without suffix) were deprecated on
-  2026-03-12 and should not be read by new code.
+- **Use the `_fp` and `_dollars` fields.** Both are suffixes on decimal
+  strings, not integer fixed-point: `_dollars` denotes a USD price
+  (4 decimals, e.g. `"0.2500"`) and `_fp` denotes a quantity like volume
+  or open interest (2 decimals, e.g. `"1234.00"`). Store both as `NUMERIC`
+  in Postgres, not `INTEGER`. The legacy integer fields (e.g. `yes_bid`,
+  `yes_ask` without suffix) were deprecated on 2026-03-12 and should not
+  be read by new code.
 
 ## Schema design
 
