@@ -1,0 +1,6 @@
+markets:
+  - ticker: EXAMPLE-TICKER-1
+    note: short human description, optional
+  - ticker: EXAMPLE-TICKER-2
+    note: replace with a real Kalshi ticker before running the collector
+  - ticker: EXAMPLE-TICKER-3
