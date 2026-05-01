@@ -1,6 +1,19 @@
 markets:
-  - ticker: EXAMPLE-TICKER-1
-    note: short human description, optional
-  - ticker: EXAMPLE-TICKER-2
-    note: replace with a real Kalshi ticker before running the collector
-  - ticker: EXAMPLE-TICKER-3
+  - ticker: KXHORMUZWEEKLY-26MAY03-T50
+    note: "Strait of Hormuz weekly traffic Above 50 (parent: KXHORMUZWEEKLY-26MAY03, week 4/27-5/3)"
+  - ticker: KXECONSTATCORECPIYOY-26JUN-T2.8
+    note: "Core CPI YoY Exactly 2.8% in Jun 2026 (parent: KXECONSTATCORECPIYOY-26JUN)"
+  - ticker: KXMARENTCONTROL-26
+    note: "Massachusetts rent control initiative pass (terminal market, no parent)"
+  - ticker: KXFOMCDISSENTCOUNT-26JUN-0
+    note: "0 dissenting votes at Jun 2026 FOMC meeting (parent: KXFOMCDISSENTCOUNT-26JUN)"
+  - ticker: KXKASHOUT-26APR-AUG01
+    note: "Kash Patel out as FBI Director Before Aug 1, 2026 (parent: KXKASHOUT-26APR)"
+  - ticker: KXAAAGASED-26NOV03-4.50
+    note: "US gas prices on Election Day Above 4.50 (parent: KXAAAGASED-26NOV03)"
+  - ticker: KXSPACEXCOUNT-26MAY-13
+    note: "SpaceX May launches Above 13 (parent: KXSPACEXCOUNT-26MAY)"
+  - ticker: KXCRITICALITY-26AUG-ATOMIC
+    note: "Atomic Alchemy criticality before Aug 2026 (parent: KXCRITICALITY-26AUG)"
+  - ticker: KXCBDECISIONEU-26JUN11-H25
+    note: "ECB Hike 1-25bps at Jun 2026 meeting (parent: KXCBDECISIONEU-26JUN11)"
