@@ -21,7 +21,9 @@ Session 1 (skeleton) is complete. We are currently in **session 2** (collector +
 ## What this pipeline does
 
 - Polls the Kalshi public REST API every 15 minutes for a hand-picked list of
-  15–30 markets (tickers declared in `tracked_markets.yml` at repo root).
+  15–30 markets (tickers declared in `tracked_markets.yml` at repo root). Entries
+  in this file are sub-tickers (terminal markets), not Kalshi event tickers;
+  resolve events to their children via `GET /events/{event_ticker}` before adding.
 - Writes one snapshot row per tracked market per poll to `market_snapshots`.
 - Refreshes `market_metadata` daily (slower-changing fields).
 - Exposes two queries:
@@ -67,10 +69,14 @@ Two tables:
 - **Postgres** via `psycopg` v3 (not psycopg2).
 - **pydantic** for request/response validation.
 - **structlog** for structured logging.
+  - Renderer is env-gated: `ENV=dev` (default) selects `structlog.dev.ConsoleRenderer`;
+    any other `ENV` value selects `structlog.processors.JSONRenderer` for cron/prod.
 - **UTC everywhere in storage.** Never store naive datetimes. Never store
   local time. Conversions happen at display time only.
 - Secrets and connection strings live in `.env` (gitignored).
   `.env.example` is committed as a template.
+- `DATABASE_URL` uses the `postgresql://` scheme, not the legacy `postgres://`
+  form. Both work with psycopg v3 today, but `postgresql://` is canonical.
 
 ## Non-goals (hard)
 
