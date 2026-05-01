@@ -16,7 +16,7 @@ Early development. Four planned sessions:
 3. Query layer (stale detector + biggest movers).
 4. Deploy to remote server + cron.
 
-Session 1 (skeleton) is complete. We are currently in **session 2** (collector + first real run).
+Sessions 1, 2, and 2.5 are complete. The pipeline is deployed to a Hetzner VPS at cloudcode-bot, with cron firing the collector every 15 minutes. Local-Mac install at ~/projects/kalshi-pipeline remains as a dev environment for code changes. Next: session 3 (query layer), to begin once 1-2 weeks of continuous data has accumulated.
 
 ## What this pipeline does
 
