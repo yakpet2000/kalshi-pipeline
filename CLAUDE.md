@@ -16,7 +16,7 @@ Early development. Four planned sessions:
 3. Query layer (stale detector + biggest movers).
 4. Deploy to remote server + cron.
 
-We are currently at the start of **session 1**.
+Session 1 (skeleton) is complete. We are currently in **session 2** (collector + first real run).
 
 ## What this pipeline does
 
