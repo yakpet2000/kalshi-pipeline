@@ -18,6 +18,26 @@ Early development. Four planned sessions:
 
 Sessions 1, 2, and 2.5 are complete. The pipeline is deployed to a Hetzner VPS at cloudcode-bot, with cron firing the collector every 15 minutes. Local-Mac install at ~/projects/kalshi-pipeline remains as a dev environment for code changes. Next: session 3 (query layer), to begin once 1-2 weeks of continuous data has accumulated.
 
+## Locked decision documents
+
+The Phase 1 favorite-longshot work (separate from the snapshotting pipeline
+above) is gated by three pre-registered notes files. They are locked before
+any Test B simulator code runs and cannot be revised after the simulator
+begins running on settled-market data.
+
+- [notes/investment-thesis.md](notes/investment-thesis.md) — v3.3 thesis, universe
+  definition, strategy spec, Test B pass/fail conditions.
+- [notes/maker-fill-model.md](notes/maker-fill-model.md) — Session B Stage 0
+  lock for the daily-candle fill rule (touch + volume>0) used by the Test B
+  simulator.
+- [notes/voided-market-detection.md](notes/voided-market-detection.md) —
+  Session B Stage 0 lock for voided-market identification and the T-bill
+  lockup-period return-attribution rule.
+
+**Test B simulator code does not exist yet.** Session B Stage 0 is
+notes-only. Future sessions should not assume any simulator implementation
+has been started.
+
 ## What this pipeline does
 
 - Polls the Kalshi public REST API every 15 minutes for a hand-picked list of
