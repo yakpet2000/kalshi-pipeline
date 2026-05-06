@@ -276,8 +276,8 @@ At `L = 0.85` and `contracts_attempted = 1176`:
 
 At `L = 0.15` and `contracts_attempted = 6666`:
 
-    raw = 0.0175 * 6666 * 0.15 * 0.85 = 14.8696
-    total_fees = round_up_to_cent(14.8696) = $14.87
+    raw = 0.0175 * 6666 * 0.15 * 0.85 = 14.87351250
+    total_fees = round_up_to_cent(14.87351250) = $14.88
 
 **v0.1 simplification: universal fee application.** Kalshi's PDF
 states maker fees apply only to certain markets, not universally.
