@@ -1,0 +1,112 @@
+series_ticker,primary_bucket,walkthrough_excluded,out_of_scope_excluded,notes
+KX3MTBILL,macro,false,false,
+KXAAAGASM,macro,false,false,
+KXADP,macro,false,false,ADP employment report
+KXAGNOMMID,us_political_appointment,false,false,Attorney General nomination (was tagged macro)
+KXAGNOMMIR,us_political_appointment,false,false,Attorney General nomination R variant (was tagged macro)
+KXARREST,us_politics,false,false,Will James Comey be arrested
+KXBADWUR,geopolitics,false,false,German Baden-Württemberg state election
+KXBALANCE,policy_outcome_quantitative,false,false,Will Trump balance the budget — measurable fiscal outcome
+KXBEZELD,,false,true,Rolex GMT-Master II Pepsi discontinuation — out of thesis scope (luxury product)
+KXBILLSCOUNT,us_politics,false,false,Number of bills become law per month
+KXBOSHOMEVAL,macro,false,false,Boston home value
+KXBRAZILGDP,macro,false,false,Foreign macro — kept as macro consistent with foreign CB decisions
+KXBUILDPERMS,macro,false,false,Building permits
+KXBULGARIAPARLI,geopolitics,false,false,Bulgarian parliamentary election
+KXCANADALIBERAL,geopolitics,true,false,Thesis Appendix A.3 walkthrough
+KXCAQLEADER,geopolitics,false,false,Coalition Avenir Québec leadership
+KXCASEWINSHOHEI,macro,false,false,
+KXCBDECISIONAUSTRALIA,macro,false,false,Foreign central bank decision
+KXCBDECISIONBRAZIL,macro,false,false,Foreign central bank decision
+KXCBDECISIONCANADA,macro,false,false,Foreign central bank decision
+KXCBDECISIONENGLAND,macro,false,false,Foreign central bank decision
+KXCBDECISIONEU,macro,false,false,Foreign central bank decision
+KXCBDECISIONJAPAN,macro,false,false,Foreign central bank decision
+KXCBDECISIONKOREA,macro,false,false,Foreign central bank decision
+KXCBDECISIONMEXICO,macro,false,false,Foreign central bank decision
+KXCBDECISIONRUSSIA,macro,false,false,Foreign central bank decision
+KXCLOSEHORMUZ,geopolitics,false,false,Strait of Hormuz closure
+KXCOLOMBIACHAMBER,geopolitics,false,false,Colombian elections
+KXCOLOMBIAPARLI,geopolitics,false,false,Colombian elections
+KXCOLOMBIASENATE,geopolitics,false,false,Colombian elections
+KXCONGESTIONSUIT,us_politics,false,false,MTA congestion-pricing lawsuit against Trump
+KXCONTEMPT,us_politics,false,false,Trump appointee contempt of court
+KXCOSTARICAASSEMBLY,geopolitics,false,false,Costa Rica election
+KXCOSTARICALAMAJORITY,geopolitics,false,false,Costa Rica election
+KXCOSTARICAPRES,geopolitics,false,false,Costa Rica election
+KXCPI,macro,false,false,
+KXCPICORE,macro,false,false,
+KXCPICOREYOY,macro,false,false,
+KXCPIYOY,macro,false,false,
+KXCREDITC,macro,false,false,
+KXCZECHCOALITION,geopolitics,false,false,Czech government formation
+KXDENHOMEVAL,macro,false,false,Denver home value
+KXDENMARKPARLI,geopolitics,false,false,Danish parliament
+KXDJTWHDINNER,us_politics,false,false,Trump WH correspondents dinner attendance
+KXECONSTATCORECPIYOY,macro,false,false,
+KXECONSTATCPI,macro,false,false,
+KXECONSTATCPICORE,macro,false,false,
+KXECONSTATCPIYOY,macro,false,false,
+KXECONSTATU3,macro,false,false,
+KXEHSALES,macro,false,false,Existing home sales
+KXELEANORRUN,us_politics,false,false,Eleanor Holmes Norton DC delegate run
+KXFEDCHAIRNOM,us_political_appointment,false,false,Fed Chair nomination (was tagged macro)
+KXFEDCOMBO,macro,false,false,
+KXFEDDECISION,macro,false,false,
+KXFEDDISSENT,macro,false,false,
+KXFEDEMPLOYEES,macro,false,false,
+KXFEDGOVNOM,us_political_appointment,false,false,Fed Governor nomination (was tagged macro)
+KXFIDESZKDNPSEATS,geopolitics,false,false,Hungarian Fidesz/KDNP seat count
+KXFOMCDISSENTCOUNT,macro,false,false,
+KXGA14S,us_politics,false,false,GA-14 special election
+KXGDP,macro,false,false,
+KXGOLDCARDS,policy_outcome_quantitative,false,false,Gold Cards count — thesis example
+KXGORDONDENTONBY,geopolitics,false,false,UK Gorton & Denton by-election
+KXGOVFORMPL,geopolitics,false,false,Polish government formation
+KXGOVILNOMR,us_politics,false,false,Republican Governor nominee Illinois
+KXHISTORICPACTSEATS,geopolitics,false,false,Norwegian Historic Pacts seats
+KXHOUHOMEVAL,macro,false,false,Houston home value
+KXHOUSINGSTART,macro,false,false,
+KXHUNGARYPARLI,geopolitics,false,false,Hungarian parliament
+KXHUNGARYPARLIPARTY,geopolitics,false,false,Hungarian parliament party
+KXINSURRECTION,us_politics,false,false,Trump invokes Insurrection Act
+KXJAPANHOUSE,geopolitics,false,false,Japanese House
+KXLAGODAYS,us_politics,false,false,Trump trips to Mar-a-Lago per month
+KXLCPIMAXYOY,macro,false,false,
+KXLEAVEPOWELL,us_political_appointment,false,false,Powell leaves Fed (was tagged macro)
+KXMAMDANISEAT,us_politics,false,false,NY State Assembly District 36 special election
+KXMORTGAGERATE,macro,false,false,
+KXMOVCOSTARICAPRESR1,geopolitics,true,false,Thesis Appendix A.2 walkthrough — Costa Rica margin of victory
+KXMSPRIMARY,us_politics,false,false,MS-02 Republican primary
+KXNEWPOPE,geopolitics,false,false,Next Pope — global leadership succession
+KXNEXTIRANLEADER,geopolitics,true,false,Thesis Appendix A.1 walkthrough — Iran Supreme Leader
+KXNFLXINCREASE,macro,false,false,Netflix price increase — corporate macro
+KXNGUARDCITY,us_politics,false,false,Cities Trump sends National Guard to
+KXNYTHEAD,policy_outcome_quantitative,false,false,NYT front-page headline count — quantitative measure
+KXPAYROLLS,macro,false,false,
+KXPCECORE,macro,false,false,
+KXPPIVSCPI,macro,false,false,
+KXSAVEAMERICACLOTURE,us_politics,false,false,Senate cloture vote on SAVE America Act
+KXSEAHOMEVAL,macro,false,false,Seattle home value
+KXSENATEARD,us_politics,false,false,Arkansas Senate Democratic primary
+KXSENATEILD,us_politics,false,false,Illinois Senate Democratic primary
+KXSENATEILR,us_politics,false,false,Illinois Senate Republican primary
+KXSENATEMSR,us_politics,false,false,Mississippi Senate Republican primary
+KXSLOVENIAPARLI,geopolitics,false,false,Slovenian parliamentary election
+KXSOLAR,macro,false,false,
+KXTARIFFCHECKS,policy_outcome_quantitative,false,false,Tariff-related US policy outcome (was tagged geopolitics)
+KXTARIFFREFUND,policy_outcome_quantitative,false,false,Tariff refund US policy outcome (was tagged geopolitics)
+KXTHAILANDHOUSE,geopolitics,false,false,Thai House election
+KXTHAILANDPM,geopolitics,false,false,Thai PM election
+KXTHAIPARLIAMENT2ND,geopolitics,false,false,Thai parliament 2nd
+KXTISZASEATS,geopolitics,false,false,Hungarian Tisza party seats
+KXTORYMPJOINREFORM,geopolitics,false,false,UK Tory MPs joining Reform
+KXTRUMPADMINLEAVE,us_political_appointment,false,false,Trump cabinet member leaves post by 2027
+KXTRUMPAPPROVALBELOW,us_politics,false,false,Trump approval rating thresholds
+KXTRUMPSUE,us_politics,false,false,Trump sues media outlet
+KXUE,macro,false,false,Unemployment
+KXUSAIRANAGREEMENT,geopolitics,false,false,US-Iran agreement
+KXUSDCUSDTRATIO,macro,false,false,USDC/USDT ratio
+KXUSDEBT,macro,false,false,
+KXUSHOMEVAL,macro,false,false,
+KXYPFARGENTINA,geopolitics,false,false,Argentina YPF
