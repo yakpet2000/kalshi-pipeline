@@ -258,16 +258,17 @@ def _build_filled_event(
     settlement_value: Decimal | None,
     tbill_lookup: Callable[[date], Decimal],
 ) -> PostEvent:
-    """Construct a filled PostEvent. Computes fee, P&L, holding-period,
-    annualized return. Voided settlements (settlement_value=None) are
-    not handled here — sub-stage 2b.5 adds T-bill-over-lockup
-    attribution. For now we raise on voided to make the sub-stage
-    boundary explicit."""
-    if settlement_value is None:
-        raise NotImplementedError(
-            "voided settlement P&L is sub-stage 2b.5; daily_check does "
-            "not handle settlement_outcome='voided'"
-        )
+    """Construct a filled PostEvent for non-voided settlements.
+    Computes fee, P&L, holding-period, annualized return.
+
+    Voided settlements (settlement_value is None) are routed
+    elsewhere by run_market — to _build_voided_filled_event — so
+    this function should never be called with settlement_value=None.
+    Defensive assertion below."""
+    assert settlement_value is not None, (
+        "_build_filled_event requires a non-None settlement_value; "
+        "voided settlements should route through _build_voided_filled_event"
+    )
     L = post_meta["limit_price"]
     side = post_meta["side"]
     contracts = post_meta["contracts_attempted"]
@@ -297,6 +298,84 @@ def _build_filled_event(
         settlement_outcome=settlement_outcome,
         settlement_value_per_contract=settlement_value,
         position_pnl=position_pnl,
+        position_pnl_net_fees=position_pnl_net_fees,
+        position_return=position_return,
+        holding_period_days=holding_period_days,
+        annualized_return=annualized_return,
+        tbill_rate_at_fill=tbill_rate,
+        **post_meta,
+    )
+
+
+def _build_voided_filled_event(
+    post_meta: dict,
+    fill_date: date,
+    void_announcement_date: date | None,
+    expected_settlement_date: date,
+    tbill_lookup: Callable[[date], Decimal],
+) -> PostEvent:
+    """Construct a filled PostEvent for a voided market, applying the
+    T-bill-over-lockup return rule per
+    notes/voided-market-detection.md §4.
+
+    Lockup period: days from fill_date to the EARLIEST of
+    (void_announcement_date, expected_settlement_date), whichever
+    comes first. If void_announcement_date is None (the void-
+    announcement timestamp was missing on the API record), fall
+    back to expected_settlement_date alone.
+
+    Per the rule, the position contributes a return equal to the
+    T-bill rate over the lockup period — i.e., the opportunity cost
+    of capital tied up. We treat this as the position's net P&L
+    directly:
+      position_return = tbill_rate * lockup_days / 365
+      position_pnl_net_fees = capital_deployed * position_return
+      position_pnl = position_pnl_net_fees  (rule abstracts over fees)
+      total_fees = None  (consistent with the abstraction; Kalshi
+                          typically refunds fees on void)
+
+    Schema fields per simulator-design.md §4 final paragraph:
+      settlement_outcome = 'voided'
+      settlement_value_per_contract = None
+      settlement_date = effective (capped) settlement date
+      holding_period_days = capped at the lockup period
+      tbill_rate_at_fill populated as usual (per §3.4)
+    """
+    if void_announcement_date is not None:
+        effective_settlement = min(void_announcement_date, expected_settlement_date)
+    else:
+        effective_settlement = expected_settlement_date
+
+    holding_period_days = (effective_settlement - fill_date).days
+    if holding_period_days <= 0:
+        # Same convention as _build_filled_event: clamp to 1 to keep
+        # the formula well-defined. A same-day fill-and-void produces
+        # at least 1 day of T-bill yield as the minimum.
+        holding_period_days = 1
+
+    tbill_rate = tbill_lookup(fill_date)
+    capital = post_meta["capital_deployed"]
+    position_return = tbill_rate * Decimal(holding_period_days) / ANNUAL_DAYS
+    position_pnl_net_fees = capital * position_return
+    # Per the rule, the lockup return is treated as net; total_fees is
+    # None (not zero) to distinguish "rule-abstracts-over-fees" from
+    # "computed fee was 0".
+    annualized_return = position_return * (ANNUAL_DAYS / Decimal(holding_period_days))
+    # Note: annualized_return collapses to tbill_rate exactly, since
+    # position_return = tbill_rate * days / 365 and we then multiply
+    # by 365/days. The simulator records this explicitly rather than
+    # short-circuiting — keeps the formula auditable and consistent
+    # with the non-voided builder's convention.
+
+    return PostEvent(
+        outcome=OUTCOME_FILLED,
+        fill_date=fill_date,
+        fill_price=post_meta["limit_price"],
+        total_fees=None,
+        settlement_date=effective_settlement,
+        settlement_outcome=SETTLE_VOIDED,
+        settlement_value_per_contract=None,
+        position_pnl=position_pnl_net_fees,
         position_pnl_net_fees=position_pnl_net_fees,
         position_return=position_return,
         holding_period_days=holding_period_days,
@@ -350,9 +429,20 @@ def run_market(
     post (filled or cancelled).
 
     `candles` is a list of raw Kalshi candle dicts (as cached by
-    scripts/fetch_candlesticks.py). `market_meta` must include:
+    scripts/fetch_candlesticks.py).
+
+    `market_meta` must include:
       ticker, event_ticker, series_ticker, primary_bucket, structure,
       settlement_outcome ("yes" / "no" / "voided")
+    For voided markets (settlement_outcome="voided"), market_meta
+    must additionally include:
+      expected_settlement_date (date): original expected settlement
+          (per voided-market-detection.md §4, this is the cap when
+          the void announcement is later or missing)
+      void_announcement_date (date | None): the API's settlement_ts
+          proxy (per voided-market-detection.md §4); None falls back
+          to expected_settlement_date alone.
+
     `tbill_lookup` is a callable(date) -> Decimal returning the
     annualized T-bill rate at the fill date.
 
@@ -368,6 +458,17 @@ def run_market(
     settlement_date = et_bucket_date(int(candles_sorted[-1]["end_period_ts"]))
     settlement_outcome = market_meta["settlement_outcome"]
     settlement_value = _settlement_value_from_outcome(settlement_outcome)
+    is_voided = settlement_outcome == SETTLE_VOIDED
+
+    if is_voided:
+        # Voided markets: lockup-period parameters must be in market_meta
+        expected_settlement_for_void: date = market_meta["expected_settlement_date"]
+        void_announcement_date_for_void: date | None = market_meta.get(
+            "void_announcement_date"
+        )
+    else:
+        expected_settlement_for_void = settlement_date  # unused
+        void_announcement_date_for_void = None
 
     resting_post_meta: dict | None = None  # carries side, L, post_date, etc.
 
@@ -404,14 +505,23 @@ def run_market(
         if resting_post_meta is not None:
             L = resting_post_meta["limit_price"]
             if _candle_fills(today, L):
-                posts.append(_build_filled_event(
-                    resting_post_meta,
-                    fill_date=today_date,
-                    settlement_date=settlement_date,
-                    settlement_outcome=settlement_outcome,
-                    settlement_value=settlement_value,
-                    tbill_lookup=tbill_lookup,
-                ))
+                if is_voided:
+                    posts.append(_build_voided_filled_event(
+                        resting_post_meta,
+                        fill_date=today_date,
+                        void_announcement_date=void_announcement_date_for_void,
+                        expected_settlement_date=expected_settlement_for_void,
+                        tbill_lookup=tbill_lookup,
+                    ))
+                else:
+                    posts.append(_build_filled_event(
+                        resting_post_meta,
+                        fill_date=today_date,
+                        settlement_date=settlement_date,
+                        settlement_outcome=settlement_outcome,
+                        settlement_value=settlement_value,
+                        tbill_lookup=tbill_lookup,
+                    ))
                 resting_post_meta = None
 
     # ---- Post-loop: order still resting at end of data ----

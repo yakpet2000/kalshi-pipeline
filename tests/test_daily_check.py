@@ -387,18 +387,30 @@ def test_first_day_no_yesterday_no_post():
     assert posts == []
 
 
-def test_voided_settlement_raises_in_2b3():
-    """Voided P&L is sub-stage 2b.5; daily_check raises if a fill
-    would settle to voided."""
-    import pytest as _pytest
+def test_voided_settlement_routes_to_voided_builder():
+    """Voided P&L was added in sub-stage 2b.5. With the required
+    void-related market_meta keys (expected_settlement_date,
+    void_announcement_date), run_market dispatches to the voided
+    builder and produces a filled PostEvent with
+    settlement_outcome='voided'. Detailed P&L coverage lives in
+    tests/test_voided.py; this test just confirms the dispatch
+    path is wired."""
     candles = [
         _candle(date(2026, 3, 1), volume="100", close="0.10",
                 high="0.12", low="0.08", previous="0.10"),
         _candle(date(2026, 3, 2), volume="100", close="0.11",
                 high="0.12", low="0.08", previous="0.10"),
     ]
-    with _pytest.raises(NotImplementedError, match="voided"):
-        run_market(candles, _meta(settlement_outcome="voided"), _const_tbill())
+    meta = _meta(settlement_outcome="voided")
+    meta["expected_settlement_date"] = date(2026, 4, 1)
+    meta["void_announcement_date"] = date(2026, 3, 15)
+    posts = run_market(candles, meta, _const_tbill())
+    fills = [p for p in posts if p.outcome == "filled"]
+    assert len(fills) >= 1
+    p = fills[0]
+    assert p.settlement_outcome == "voided"
+    assert p.settlement_value_per_contract is None
+    assert p.total_fees is None  # voided rule abstracts over fees
 
 
 def test_postevent_is_frozen_dataclass():
