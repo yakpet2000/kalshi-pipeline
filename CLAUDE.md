@@ -21,9 +21,9 @@ Sessions 1, 2, and 2.5 are complete. The pipeline is deployed to a Hetzner VPS a
 ## Locked decision documents
 
 The Phase 1 favorite-longshot work (separate from the snapshotting pipeline
-above) is gated by three pre-registered notes files. They are locked before
-any Test B simulator code runs and cannot be revised after the simulator
-begins running on settled-market data.
+above) is gated by the pre-registered artifacts below. They are locked
+before any Test B simulator code runs and cannot be revised after the
+simulator begins running on settled-market data.
 
 - [notes/investment-thesis.md](notes/investment-thesis.md) — v3.3 thesis, universe
   definition, strategy spec, Test B pass/fail conditions.
@@ -33,10 +33,19 @@ begins running on settled-market data.
 - [notes/voided-market-detection.md](notes/voided-market-detection.md) —
   Session B Stage 0 lock for voided-market identification and the T-bill
   lockup-period return-attribution rule.
+- [notes/universe-construction.md](notes/universe-construction.md) — Session B
+  Stage 1b methodology lock for Test B universe construction.
+- [notes/series-bucket-assignments.csv](notes/series-bucket-assignments.csv) —
+  input artifact, hand-classified series-to-thesis-bucket mapping (111 series).
+- [notes/test-b-universe.csv](notes/test-b-universe.csv) — locked Test B universe,
+  the output of `scripts/build_test_b_universe.py`.
+- [scripts/build_test_b_universe.py](scripts/build_test_b_universe.py) — the
+  construction script that produces test-b-universe.csv from the inputs above.
 
-**Test B simulator code does not exist yet.** Session B Stage 0 is
-notes-only. Future sessions should not assume any simulator implementation
-has been started.
+**Test B simulator code does not exist yet.** Session B Stages 0 and 1
+produced notes, methodology, and the locked universe table, but no
+simulator implementation. Universe construction is not the simulator.
+Future sessions should not conflate the two.
 
 ## What this pipeline does
 
