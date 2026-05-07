@@ -1,0 +1,31 @@
+==================================================================
+Test B simulator diagnostics
+==================================================================
+
+Funnel (counts of attempted posts):
+  total attempted                  =  4599
+  filled                           =   102
+  stale_cancelled                  =  3023
+  out_of_zone_cancelled            =    94
+  blocked_by_cap                   =  1380
+  blocked_by_filter                =     0
+
+Per-bucket fill rate:
+  macro                                 1.84% (28/1518)
+  geopolitics                           1.97% (14/709)
+  us_politics                           1.63% (21/1288)
+  us_political_appointment              4.44% (15/338)
+  policy_outcome_quantitative           3.22% (24/746)
+
+Per-structure fill rate:
+  single-binary                         2.58% (32/1240)
+  multi-outcome-2-4                     2.08% (70/3359)
+
+Capital utilization:
+  peak capital deployed            = $29999.5830
+  mean capital deployed            = $25914.85566483516483516483516
+  days at or above $30K cap        =     0
+  test-period day count            =   546
+
+Voided positions: 0
+==================================================================
