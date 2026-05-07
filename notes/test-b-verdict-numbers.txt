@@ -1,0 +1,143 @@
+========================================================================
+Stage 3b verdict computation — numbers
+========================================================================
+
+Inputs:
+  pre-registration commit:  488fbb4
+  positions CSV commit:     13b048b
+  DGS3MO CSV commit:        1205656
+  bootstrap seed:           42
+  bootstrap resamples:      10000
+  n_total_attempted:        4599
+  n_total_filled:           102
+
+T-bill window mean (Option 1 sensitivity reference):
+  window: 2024-11-01 to 2026-04-30
+  mean DGS3MO over window:  0.041237 (4.1237%)
+
+========================================================================
+Per-cell metrics
+========================================================================
+
+--- Track 2 (favorite-buy) × single-binary  [PRIMARY] ---
+  n_attempted:         320
+  n_filled:            3
+  fill_rate:           0.0094 (0.94%)
+  median_excess:       1.169754
+  mean_excess:         1.168069
+  se_median_excess:    0.310990
+  median_raw:          1.207054  (Option 1 sensitivity)
+  voided_count:        0 (0.00%)
+  Conditions:
+    1. median_excess >= 0:        True
+    2. fill_rate >= 30%:          False
+    3. mean >= median - 2*SE:     True
+    4. n_filled >= 30:            False
+  ALL 4 PASS:          False
+  Option 1 (median_raw >= window_avg):  True
+
+--- Track 2 (favorite-buy) × multi-outcome-2-4  [descriptive] ---
+  n_attempted:         904
+  n_filled:            29
+  fill_rate:           0.0321 (3.21%)
+  median_excess:       1.832265
+  mean_excess:         4.592016
+  se_median_excess:    0.823784
+  median_raw:          1.869565  (Option 1 sensitivity)
+  voided_count:        0 (0.00%)
+  Conditions:
+    1. median_excess >= 0:        True
+    2. fill_rate >= 30%:          False
+    3. mean >= median - 2*SE:     True
+    4. n_filled >= 30:            False
+  ALL 4 PASS:          False
+  Option 1 (median_raw >= window_avg):  True
+
+--- Track 3 (longshot-sell) × single-binary  [descriptive] ---
+  n_attempted:         920
+  n_filled:            29
+  fill_rate:           0.0315 (3.15%)
+  median_excess:       14.909496
+  mean_excess:         34.317913
+  se_median_excess:    5.795293
+  median_raw:          14.946596  (Option 1 sensitivity)
+  voided_count:        0 (0.00%)
+  Conditions:
+    1. median_excess >= 0:        True
+    2. fill_rate >= 30%:          False
+    3. mean >= median - 2*SE:     True
+    4. n_filled >= 30:            False
+  ALL 4 PASS:          False
+  Option 1 (median_raw >= window_avg):  True
+
+--- Track 3 (longshot-sell) × multi-outcome-2-4  [descriptive] ---
+  n_attempted:         2455
+  n_filled:            41
+  fill_rate:           0.0167 (1.67%)
+  median_excess:       14.907673
+  mean_excess:         20.377388
+  se_median_excess:    3.798435
+  median_raw:          14.944773  (Option 1 sensitivity)
+  voided_count:        0 (0.00%)
+  Conditions:
+    1. median_excess >= 0:        True
+    2. fill_rate >= 30%:          False
+    3. mean >= median - 2*SE:     True
+    4. n_filled >= 30:            True
+  ALL 4 PASS:          False
+  Option 1 (median_raw >= window_avg):  True
+
+--- Track 1 (full) × single-binary  [descriptive] ---
+  n_attempted:         1240
+  n_filled:            32
+  fill_rate:           0.0258 (2.58%)
+  median_excess:       12.126376
+  mean_excess:         31.210115
+  se_median_excess:    5.641430
+  median_raw:          12.163376  (Option 1 sensitivity)
+  voided_count:        0 (0.00%)
+  Conditions:
+    1. median_excess >= 0:        True
+    2. fill_rate >= 30%:          False
+    3. mean >= median - 2*SE:     True
+    4. n_filled >= 30:            True
+  ALL 4 PASS:          False
+  Option 1 (median_raw >= window_avg):  True
+
+--- Track 1 (full) × multi-outcome-2-4  [descriptive] ---
+  n_attempted:         3359
+  n_filled:            70
+  fill_rate:           0.0208 (2.08%)
+  median_excess:       3.462485
+  mean_excess:         13.837734
+  se_median_excess:    2.112615
+  median_raw:          3.499585  (Option 1 sensitivity)
+  voided_count:        0 (0.00%)
+  Conditions:
+    1. median_excess >= 0:        True
+    2. fill_rate >= 30%:          False
+    3. mean >= median - 2*SE:     True
+    4. n_filled >= 30:            True
+  ALL 4 PASS:          False
+  Option 1 (median_raw >= window_avg):  True
+
+========================================================================
+Track 1 transparency check (§6.7)
+========================================================================
+  Track 1 combined n_filled:  102
+  Track 1 combined median excess: 5.575456
+  Track 1 combined mean excess:   19.287893
+  Transparency flag (primary PASS AND Track 1 median<=0): False
+
+========================================================================
+VERDICT
+========================================================================
+  INSUFFICIENT SAMPLE
+
+  Primary cell (Track 2 (favorite-buy) × single-binary) has n_filled=3 <
+  30. Per the verdict-ladder ordering locked in stage-3b-preregistration
+  §§6.9 and the planning chat, INSUFFICIENT SAMPLE dominates:
+  descriptive-cell findings are reported but do not promote to
+  DESCRIPTIVE PASS when primary N<30.
+
+========================================================================
